@@ -68,9 +68,7 @@ class SecondView extends StatelessWidget {
          style: TextStyle(color: Colors.black, fontSize: 26), ),
         backgroundColor: Colors.grey[400],
       ),
-    body: Center(
-       _list(),)
-      
+     body:  _list(),
     );
   }
 
@@ -87,6 +85,15 @@ class SecondView extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.all(20.0),
       child: Text(text, style: TextStyle(fontSize: 26)),
+    );
+  }
+  Widget _checkBox() {
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.start,
+      crossAxisAlignment: CrossAxisAlignment.start,
+    children: [
+      Checkbox(value: false, onChanged: (val) {} )
+    ],
     );
   }
 }
