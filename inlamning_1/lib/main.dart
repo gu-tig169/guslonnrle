@@ -57,52 +57,6 @@ class MainView extends StatelessWidget {
     );
   }
 
-  Widget _checkboxRow() {
-    return Row(
-      children: [
-        Checkbox(
-          value: false,
-          onChanged: (val) {},
-        ),
-        Text('Contact me')
-      ],
-    );
-  }
-
-  Widget _iconRow() {
-    return Row(
-      children: [
-        Container(
-          margin: EdgeInsets.only(left: 16, right: 16),
-          child: Icon(Icons.person),
-        ),
-        Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text('Heading',
-                style: TextStyle(fontSize: 20, color: Colors.black)),
-            Text('Subheading'),
-          ],
-        ),
-      ],
-    );
-  }
-
-  Widget _buttonRow() {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        OutlineButton(onPressed: () {}, child: Text('Cancel')),
-        Container(width: 40),
-        RaisedButton(
-          onPressed: () {},
-          child: Text('Save'),
-          color: Colors.blue,
-          textColor: Colors.white,
-        ),
-      ],
-    );
-  }
 }
 
 class SecondView extends StatelessWidget {
