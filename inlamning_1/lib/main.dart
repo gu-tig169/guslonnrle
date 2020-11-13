@@ -15,7 +15,10 @@ class MainView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('TIG169'),
+        centerTitle: true,
+        title: Text('TIG169 TODO',
+         style: TextStyle(color: Colors.black, fontSize: 26), ),
+        backgroundColor: Colors.grey[400],
         actions: [
           IconButton(
             icon: Icon(Icons.arrow_right),
@@ -31,72 +34,26 @@ class MainView extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            _image(),
             Container(
-                margin: EdgeInsets.only(left: 16, top: 24),
-                child: Text('Name')),
-            Container(
-                margin: EdgeInsets.only(left: 16, right: 16),
+                margin: EdgeInsets.only(left: 16, right: 16, top: 39),
                 child: TextField(
-                    decoration: InputDecoration(hintText: 'Your name'))),
-            Container(height: 24),
-            _checkboxRow(),
-            Container(height: 24),
-            _iconRow(),
-            Container(height: 18),
-            _buttonRow(),
-          ],
+                    textAlign: TextAlign.center,
+                    decoration: InputDecoration(hintText: 'What are you going to do?',)
+                    )),
+            Container(height: 47),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+              Icon(Icons.add),
+              Text('  ADD', style: TextStyle(fontSize: 16)),
+              
+            ],)
+          ]
+ 
+          
         ),
       ),
-    );
-  }
-
-  Widget _appBar() {
-    return Container(
-      height: 53,
-      decoration: BoxDecoration(color: Colors.blue),
-      child: Center(
-        child: Text(
-          'Title',
-          style: TextStyle(
-            color: Colors.white,
-            fontSize: 24,
-          ),
-        ),
-      ),
-    );
-  }
-
-  Widget _image() {
-    return Stack(
-      children: [
-        Image(image: AssetImage('assets/stefan.jpg')),
-        Positioned(
-          left: 0,
-          bottom: 0,
-          right: 0,
-          child: Container(
-            height: 101,
-            decoration: BoxDecoration(
-              gradient: LinearGradient(
-                colors: [
-                  Color.fromARGB(0, 255, 255, 255),
-                  Color.fromARGB(255, 255, 255, 255),
-                ],
-                begin: Alignment.topCenter,
-                end: Alignment.bottomCenter,
-              ),
-            ),
-          ),
-        ),
-        Positioned(
-          bottom: 15,
-          child: Text(
-            'Heja Stefan',
-            style: TextStyle(fontSize: 46),
-          ),
-        )
-      ],
     );
   }
 
@@ -151,13 +108,20 @@ class MainView extends StatelessWidget {
 class SecondView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(),
-      body: _list(),
+      appBar: AppBar(
+        centerTitle: true,
+        title: Text('TIG169 TODO',
+         style: TextStyle(color: Colors.black, fontSize: 26), ),
+        backgroundColor: Colors.grey[400],
+      ),
+    body: Center(
+       _list(),)
+      
     );
   }
 
   Widget _list() {
-    var list = ['Jonas', 'Leo', 'Klas', 'Inge',];
+    var list = ['Write a book', 'Do homework', 'Tidy room', 'Watch TV','Nap', 'Shop groceries', 'Have fun', 'Meditate'];
     return ListView(
       children: 
         list.map((item) => _item(item)).toList(),
@@ -168,7 +132,7 @@ class SecondView extends StatelessWidget {
   Widget _item(text) {
     return Padding(
       padding: const EdgeInsets.all(20.0),
-      child: Text(text, style: TextStyle(fontSize: 36)),
+      child: Text(text, style: TextStyle(fontSize: 26)),
     );
   }
 }
