@@ -1,8 +1,8 @@
 import 'package:provider/provider.dart';
 import 'package:flutter/material.dart';
-
-import 'TodoListView.dart';
 import 'model.dart';
+import 'TodoList.dart';
+
 
 
 void main() {
@@ -23,7 +23,7 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.grey,
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
-      home: TodoListView(),
+      home: TodoList(),
       
     );
   }
