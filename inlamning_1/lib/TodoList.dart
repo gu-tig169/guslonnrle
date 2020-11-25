@@ -1,36 +1,80 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import './model.dart';
-class TodoList extends StatelessWidget{
-  final List<TodoAssignment> list;
-  TodoList(this.list);
-  final firstvalue=false;
-  final secondvalue=true;
+import './EditTodoView.dart';
 
-  Widget build(BuildContext context){
-    return ListView(
-      children: list.map((todo)=>_todoItem(context, todo)).toList());
+
+class TodoList extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        centerTitle:true,
+        title: Text('TIG169 TODO'), 
+        actions: [_popupButton()]),       
+      body: _buildList(context),
+      floatingActionButton: FloatingActionButton(child: Icon(Icons.add),
+      onPressed: () async{
+        var newTodo = await Navigator.push(
+          context,
+          MaterialPageRoute(
+           builder: (context)=> EditTodoView(
+            TodoAssignment())));
+        if(newTodo != null){
+          Provider.of<MyState>(context, listen: false).addTodo(newTodo);
+        } 
+      },
+      ),
+    );
   }
 
-  Widget _todoItem(context, todo) {
-    return CheckboxListTile(
-      value: this.firstvalue,
-      title: Text(todo.assignment),
-      secondary: IconButton(
-        icon: Icon(Icons.coronavirus_sharp), // Haha! Tyckte det var otroligt kul att det fanns en corona-icon.
-        onPressed: (){                       // Tänker att man klickar på den när något inte sker pga corona, och då tas den bort.
-          var state = Provider.of<MyState>(context, listen: false);
-          state.removeTodo(todo);
-
+  Widget _buildList(BuildContext context){
+    return Consumer <MyState>(
+      builder: (context, state, child) => ListView.builder(
+        itemCount: state.getTodos.length,
+        itemBuilder: (context,index,) {
+          return ListTile(
+            leading: Checkbox(
+            value: state.getDone(index),
+            onChanged: (bool done) {
+              state.setDone(index, done);
+            },
+          ),
+          title: state.getTodo(state, index),
+            trailing: IconButton(
+            icon: Icon(Icons.coronavirus_sharp), // Haha! Tyckte det var otroligt kul att det fanns en corona-icon.
+                onPressed: (){                       // Tänker att man klickar på den när något inte sker pga corona, och då tas den bort.
+                  state.delete(index);
         },
       ),
       
-      onChanged: (bool newVvalue) {
-        
-        });
-        
-              //Här vill jag göra så att det kryssas för när man klickar på rutan.   
-            // Men det hann jag inte riktigt göra.
-    
+);
+        }
+        ,)
+      );
+  }
+    Widget _popupButton(){
+    return Consumer <MyState> (
+      builder: (context, state, child) => PopupMenuButton(
+        onSelected: (newValue) {
+          state.setFilterValue(newValue);
+          state.useFilter();
+        },
+        itemBuilder: (context) => [
+          PopupMenuItem(
+            child: Text("All"),
+            value: "All",
+            ),
+          PopupMenuItem(
+            child: Text("Done"),
+            value: "Done",
+            ),
+          PopupMenuItem(
+            child: Text("Undone"),
+            value: "Undone",
+            ),
+        ],
+
+    ));
   }
 }
