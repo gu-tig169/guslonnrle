@@ -27,6 +27,11 @@ class EditTodoViewState extends State<EditTodoView>{
       });
      });
   }
+   // Future<TodoAssignment> addingTodo(TodoAssignment todo) async {
+   // Future<List<TodoAssignment>> todoList = await Api.addingTodo(todo);
+    //return await todoList;
+    //await getList();
+ // }
 
   Widget build(buildContext){
     return Scaffold(
@@ -42,7 +47,7 @@ class EditTodoViewState extends State<EditTodoView>{
           FlatButton(
                   child: Text('+ ADD', style: TextStyle(color: Colors.black, fontSize: 16)),
                   onPressed: () {
-                    Api.addingTodo(TodoAssignment( assignment: textEditingController.text, id: 'tre', done: false));
+                    Api.addingTodo(TodoAssignment( assignment: textEditingController.text, id: null, done: false));
                   Navigator.pop(context, TodoAssignment(assignment: assignment));
               },
           ),

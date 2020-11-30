@@ -37,20 +37,14 @@ class TodoList extends StatelessWidget {
             leading: Checkbox(
             value: state.getDone(index),
             onChanged: (bool done) {
-              state.setDone(index, done);
+              state.updateTodoByIndex(index, done);
             },
           ),
           title: state.getTodo(state, index),
             trailing: IconButton(
-            icon: Icon(Icons.coronavirus_sharp), // Haha! Tyckte det var otroligt kul att det fanns en corona-icon.
-                onPressed: (){     
-                  //Api.deleteTodo(todo)                  // Tänker att man klickar på den när något inte sker pga corona, och då tas den bort.
+            icon: Icon(Icons.coronavirus_sharp),
+                onPressed: (){      
                   state.delete(index);
-                  print('index: $index');
-                  print('context: $context');
-                  print('child: $child');
-                  print('state: $state.getID');
-                  
         },
       ),
       
