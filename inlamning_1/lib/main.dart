@@ -7,12 +7,15 @@ import 'TodoList.dart';
 
 void main() {
   var state = MyState();
+  state.getList();
+  
   runApp(
     ChangeNotifierProvider(
       create: (context)=>state,
       child: MyApp(),
     ),
   );
+  
 }
 class MyApp extends StatelessWidget {
   @override

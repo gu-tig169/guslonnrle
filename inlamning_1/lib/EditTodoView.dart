@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-
+import './Api.dart';
 import './model.dart';
 
 class EditTodoView extends StatefulWidget {
@@ -42,6 +42,7 @@ class EditTodoViewState extends State<EditTodoView>{
           FlatButton(
                   child: Text('+ ADD', style: TextStyle(color: Colors.black, fontSize: 16)),
                   onPressed: () {
+                    Api.addingTodo(TodoAssignment( assignment: textEditingController.text, id: 'tre', done: false));
                   Navigator.pop(context, TodoAssignment(assignment: assignment));
               },
           ),

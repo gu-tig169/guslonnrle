@@ -1,15 +1,47 @@
 import 'package:flutter/material.dart';
+import 'Api.dart';
+
+String boolToString(bool done){
+  if (done==false) {
+    return 'false';
+  } if (done==true) {
+    return 'true';
+  }
+  return 'false';
+}
+
+stringToBool(String done) {
+  if (done=='false') return false;
+  if (done=='true') return true;
+return false;
+}
 
 class TodoAssignment{
   String assignment;
+  String id;
   bool done;
 
-  TodoAssignment({this.assignment, this.done=false});
+  TodoAssignment({this.assignment, this.done=false, this.id});
+ 
 
-  void completed() {
+  static Map<String,dynamic> toJson(TodoAssignment todo) {
+    return {
+      'title': todo.assignment,
+      'done' : boolToString(todo.done),
+      };
+  }
+  static TodoAssignment fromJson(Map<String,dynamic> json) {
+    return TodoAssignment(
+      id: json['id'],
+      assignment: json['title'],
+      done: stringToBool(json['done']),
+    );
+  }
+    void completed() {
     done = !done;
   }
 }
+
 
 class MyState extends ChangeNotifier{
 
@@ -18,6 +50,22 @@ class MyState extends ChangeNotifier{
   List <TodoAssignment> _todos =[]; 
 
   List<TodoAssignment> get list => _todos;
+
+  Future getList() async{
+    List<TodoAssignment> list =await Api.getTodos();
+    _todos = list;
+    notifyListeners();
+  }
+
+  void addingTodo(TodoAssignment todo) async {
+    await Api.addingTodo(todo);
+    await getList();
+  }
+
+  void removingTodo(TodoAssignment todo) async {
+    await Api.deleteTodo(todo.id);
+    await getList();
+  }
 
   List<TodoAssignment> _filteredTodos;
 
@@ -32,7 +80,7 @@ class MyState extends ChangeNotifier{
     return _filteredTodos;
   }
 
-  List get getTodos {
+ List get getTodos {
     if (_todos.length == 0) {
       var task = new TodoAssignment(assignment: "eat pizza", done: false);
       _todos.add(task);
