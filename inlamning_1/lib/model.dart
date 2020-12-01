@@ -91,9 +91,10 @@ class MyState extends ChangeNotifier{
     return filtering(_todos, _filterValue);
   }
 
-  void addTodo(TodoAssignment todo) {
+  void addTodo(TodoAssignment todo) async{
     _filterValue= "All";
     _todos.add(todo);
+    await getList();
     notifyListeners();
   }
   void removeTodo(TodoAssignment todo) {
@@ -129,12 +130,8 @@ class MyState extends ChangeNotifier{
   }
 
   updateTodoByIndex(index, bool isDone) {
-    print(getTodos[index].done);
     getTodos[index].completed();
-    print(getTodos[index].done);
     updatingTodo(getTodos[index]);
     notifyListeners();
-    print(getTodos[index].done);
-    
   } 
 }

@@ -27,11 +27,6 @@ class EditTodoViewState extends State<EditTodoView>{
       });
      });
   }
-   // Future<TodoAssignment> addingTodo(TodoAssignment todo) async {
-   // Future<List<TodoAssignment>> todoList = await Api.addingTodo(todo);
-    //return await todoList;
-    //await getList();
- // }
 
   Widget build(buildContext){
     return Scaffold(
