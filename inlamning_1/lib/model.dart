@@ -108,10 +108,10 @@ class MyState extends ChangeNotifier{
   }
   getTodo(done, index) {
     if(getTodos[index].done==false) {
-      return Text(getTodos[index].assignment);
+      return Text(getTodos[index].assignment, style: TextStyle(fontSize: 20));
     } else {
       return Text(getTodos[index].assignment,
-        style: TextStyle(decoration: TextDecoration.lineThrough)); 
+        style: TextStyle(fontSize: 20, decoration: TextDecoration.lineThrough,)); 
     }
   }
 

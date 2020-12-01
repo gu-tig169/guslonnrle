@@ -30,23 +30,36 @@ class EditTodoViewState extends State<EditTodoView>{
 
   Widget build(buildContext){
     return Scaffold(
-      appBar: AppBar(centerTitle: true, title: Text('TIG169 TODO'),
+      appBar: AppBar(
+        backgroundColor: Colors.blue[600],
+        centerTitle: true,
+        title: Text('TIG169 TODO', 
+        style: TextStyle(
+          color: Colors.white)),
       ),
-      body: Column(
-        children: [
-          TextField(
-            controller: textEditingController,
-            textAlign: TextAlign.center,
-            decoration: InputDecoration(
-              hintText: 'What are you going to do?',),),
-          FlatButton(
-                  child: Text('+ ADD', style: TextStyle(color: Colors.black, fontSize: 16)),
-                  onPressed: () {
-                    Api.addingTodo(TodoAssignment( assignment: textEditingController.text, id: null, done: false));
+      body: Padding(
+        padding: const EdgeInsets.all(24.0),
+        child: Column(
+          children: [
+            TextField(
+              controller: textEditingController,
+              textAlign: TextAlign.center,
+              decoration: InputDecoration(
+                enabledBorder: OutlineInputBorder(),
+                hintText: 'What are you going to do?',),),
+            Padding(
+              padding: const EdgeInsets.all(12.0),
+              child: RaisedButton(
+                child: Text('+ ADD', style: TextStyle(color: Colors.white, fontSize: 16)),
+                color: Colors.blue[600],
+                onPressed: () {
+                  Api.addingTodo(TodoAssignment( assignment: textEditingController.text, id: null, done: false));
                   Navigator.pop(context, TodoAssignment(assignment: assignment));
-              },
-          ),
-        ],
+                  },
+              ),
+            ),
+          ],
+        ),
       )
      
     );
