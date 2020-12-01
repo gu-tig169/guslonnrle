@@ -9,11 +9,21 @@ class TodoList extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: Colors.blue[600],
         centerTitle:true,
-        title: Text('TIG169 TODO'), 
+        title: Text('TIG169 TODO',
+          style: TextStyle(
+            color: Colors.white
+          )
+        ), 
         actions: [_popupButton()]),       
       body: _buildList(context),
-      floatingActionButton: FloatingActionButton(child: Icon(Icons.add),
+      floatingActionButton: FloatingActionButton(
+        backgroundColor: Colors.blue[600],
+        child: Icon(Icons.add,
+          color: Colors.white
+        ),
+        
       onPressed: () async{
         var newTodo = await Navigator.push(
           context,
@@ -34,23 +44,20 @@ class TodoList extends StatelessWidget {
         itemCount: state.getTodos.length,
         itemBuilder: (context,index,) {
           return ListTile(
+            contentPadding: EdgeInsetsDirectional.only(start: 20, top: 20),
             leading: Checkbox(
+              checkColor: Colors.white,
+              activeColor: Colors.blue[600],
             value: state.getDone(index),
             onChanged: (bool done) {
-              state.setDone(index, done);
+              state.updateTodoByIndex(index, done);
             },
           ),
           title: state.getTodo(state, index),
             trailing: IconButton(
-            icon: Icon(Icons.coronavirus_sharp), // Haha! Tyckte det var otroligt kul att det fanns en corona-icon.
-                onPressed: (){     
-                  //Api.deleteTodo(todo)                  // Tänker att man klickar på den när något inte sker pga corona, och då tas den bort.
+            icon: Icon(Icons.coronavirus_sharp, color: Colors.red),
+                onPressed: (){      
                   state.delete(index);
-                  print('index: $index');
-                  print('context: $context');
-                  print('child: $child');
-                  print('state: $state.getID');
-                  
         },
       ),
       
@@ -62,6 +69,7 @@ class TodoList extends StatelessWidget {
     Widget _popupButton(){
     return Consumer <MyState> (
       builder: (context, state, child) => PopupMenuButton(
+        color: Colors.white,
         onSelected: (newValue) {
           state.setFilterValue(newValue);
           state.useFilter();

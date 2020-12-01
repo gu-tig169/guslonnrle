@@ -26,10 +26,12 @@ class TodoAssignment{
 
   static Map<String,dynamic> toJson(TodoAssignment todo) {
     return {
+      'id' : todo.id != null ? todo.id : '',
       'title': todo.assignment,
-      'done' : boolToString(todo.done),
-      };
+      'done' : boolToString(todo.done)  
+    };
   }
+
   static TodoAssignment fromJson(Map<String,dynamic> json) {
     return TodoAssignment(
       id: json['id'],
@@ -37,9 +39,11 @@ class TodoAssignment{
       done: stringToBool(json['done']),
     );
   }
-    void completed() {
-    done = !done;
+  
+  void completed() {
+    this.done = !done;
   }
+
 }
 
 
@@ -47,7 +51,7 @@ class MyState extends ChangeNotifier{
 
   String _filterValue = "All";
 
-  List <TodoAssignment> _todos =[]; 
+  List <TodoAssignment> _todos = []; 
 
   List<TodoAssignment> get list => _todos;
 
@@ -64,7 +68,10 @@ class MyState extends ChangeNotifier{
 
   void removingTodo(TodoAssignment todo) async {
     await Api.deleteTodo(todo.id);
-    await getList();
+  }
+
+  void updatingTodo(TodoAssignment todo) async {
+    await Api.updateTodo(todo);
   }
 
   List<TodoAssignment> _filteredTodos;
@@ -81,29 +88,13 @@ class MyState extends ChangeNotifier{
   }
 
  List get getTodos {
-    if (_todos.length == 0) {
-      var task = new TodoAssignment(assignment: "eat pizza", done: false);
-      _todos.add(task);
-      var task2 = new TodoAssignment(assignment: "go to the gym", done: false);
-      _todos.add(task2);
-      var task3 = new TodoAssignment(assignment: "call grandma", done: true);
-      _todos.add(task3);
-      var task4 = new TodoAssignment(assignment: "go for a run", done: true);
-      _todos.add(task4);
-      var task5 = new TodoAssignment(assignment: "meditate", done: false);
-      _todos.add(task5);
-      var task6 = new TodoAssignment(assignment: "buy vegetables", done: false);
-      _todos.add(task6);
-      var task7 = new TodoAssignment(assignment: "play guitar", done: true);
-      _todos.add(task7);
-    }
     return filtering(_todos, _filterValue);
   }
 
-
-  void addTodo(TodoAssignment todo) {
+  void addTodo(TodoAssignment todo) async{
     _filterValue= "All";
     _todos.add(todo);
+    await getList();
     notifyListeners();
   }
   void removeTodo(TodoAssignment todo) {
@@ -117,24 +108,30 @@ class MyState extends ChangeNotifier{
   }
   getTodo(done, index) {
     if(getTodos[index].done==false) {
-      return Text(getTodos[index].assignment);
+      return Text(getTodos[index].assignment, style: TextStyle(fontSize: 20));
     } else {
       return Text(getTodos[index].assignment,
-        style: TextStyle(decoration: TextDecoration.lineThrough)); 
+        style: TextStyle(fontSize: 20, decoration: TextDecoration.lineThrough,)); 
     }
   }
+
   bool getDone(index) {
     return getTodos[index].done;
   }
+
   void setFilterValue(newValue) {
     _filterValue = newValue;
   }
-  void setDone(index, bool testValue) {
-    getTodos[index].completed();
-    notifyListeners();
-  }
-    void delete(index) {  
+
+  void delete(index) {  
+    removingTodo(getTodos[index]);
     getTodos.removeAt(index);
     notifyListeners();
   }
+
+  updateTodoByIndex(index, bool isDone) {
+    getTodos[index].completed();
+    updatingTodo(getTodos[index]);
+    notifyListeners();
+  } 
 }
