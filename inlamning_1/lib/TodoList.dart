@@ -44,28 +44,29 @@ class TodoList extends StatelessWidget {
         itemCount: state.getTodos.length,
         itemBuilder: (context,index,) {
           return ListTile(
-            contentPadding: EdgeInsetsDirectional.only(start: 20, top: 20),
-            leading: Checkbox(
+            contentPadding: state.getTodos.length==index+1? EdgeInsetsDirectional.only(start:20, top:20, bottom: 100, end: 20): EdgeInsetsDirectional.only(start:20, top:20, end: 20),
+            leading: 
+            Checkbox(
               checkColor: Colors.white,
               activeColor: Colors.blue[600],
-            value: state.getDone(index),
-            onChanged: (bool done) {
-              state.updateTodoByIndex(index, done);
-            },
-          ),
-          title: state.getTodo(state, index),
+              value: state.getDone(index),
+              onChanged: (bool done) {
+                state.updateTodoByIndex(index, done);
+              },
+            ),
+            title: state.getTodo(state, index),
             trailing: IconButton(
             icon: Icon(Icons.coronavirus_sharp, color: Colors.red),
-                onPressed: (){      
-                  state.delete(index);
+              onPressed: (){      
+                state.delete(index);
+              },
+            ),  
+          );
         },
-      ),
-      
-);
-        }
-        ,)
-      );
+      )
+    );
   }
+
     Widget _popupButton(){
     return Consumer <MyState> (
       builder: (context, state, child) => PopupMenuButton(
