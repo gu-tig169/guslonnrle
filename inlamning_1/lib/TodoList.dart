@@ -51,7 +51,7 @@ class TodoList extends StatelessWidget {
               activeColor: Colors.blue[600],
               value: state.getDone(index),
               onChanged: (bool done) {
-                state.updateTodoByIndex(index, done);
+                state.updateTodoByIndex(index);
               },
             ),
             title: state.getTodo(state, index),
