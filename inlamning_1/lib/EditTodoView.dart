@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import './Api.dart';
 import './model.dart';
 
 class EditTodoView extends StatefulWidget {
@@ -19,13 +18,7 @@ class EditTodoViewState extends State<EditTodoView>{
 
   EditTodoViewState(TodoAssignment todo) {
     this.assignment = todo.assignment;
-
     textEditingController= TextEditingController(text: todo.assignment);
-    textEditingController.addListener(() {
-      setState(() {
-        assignment = textEditingController.text;
-      });
-     });
   }
 
   Widget build(buildContext){
@@ -53,8 +46,7 @@ class EditTodoViewState extends State<EditTodoView>{
                 child: Text('+ ADD', style: TextStyle(color: Colors.white, fontSize: 16)),
                 color: Colors.blue[600],
                 onPressed: () {
-                  Api.addingTodo(TodoAssignment( assignment: textEditingController.text, id: null, done: false));
-                  Navigator.pop(context, TodoAssignment(assignment: assignment));
+                    Navigator.pop(context, TodoAssignment( assignment: textEditingController.text, id: null, done: false));
                   },
               ),
             ),

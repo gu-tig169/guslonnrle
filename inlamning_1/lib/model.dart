@@ -64,10 +64,13 @@ class MyState extends ChangeNotifier{
   void addingTodo(TodoAssignment todo) async {
     await Api.addingTodo(todo);
     await getList();
+    notifyListeners();
   }
 
   void removingTodo(TodoAssignment todo) async {
     await Api.deleteTodo(todo.id);
+    await getList();
+    notifyListeners();
   }
 
   void updatingTodo(TodoAssignment todo) async {
@@ -92,13 +95,14 @@ class MyState extends ChangeNotifier{
   }
 
   void addTodo(TodoAssignment todo) async{
+    addingTodo(todo);
     _filterValue= "All";
     _todos.add(todo);
     await getList();
     notifyListeners();
   }
-  void removeTodo(TodoAssignment todo) {
-    _todos.remove(todo);
+  void removeTodo(index) {
+    _todos.remove(index);
     notifyListeners();
   }
 
@@ -129,9 +133,10 @@ class MyState extends ChangeNotifier{
     notifyListeners();
   }
 
-  updateTodoByIndex(index, bool isDone) {
-    getTodos[index].completed();
-    updatingTodo(getTodos[index]);
+  updateTodoByIndex(index) {
+    TodoAssignment todoToUpdate = getTodos[index];
+    todoToUpdate.completed();
+    updatingTodo(todoToUpdate);
     notifyListeners();
   } 
 }
